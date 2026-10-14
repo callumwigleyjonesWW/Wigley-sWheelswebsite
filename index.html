@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wigley's Wheels | Curated Classic Car &amp; Motorcycle Collection</title>
+  <meta name="description" content="Wigley's Wheels — a curated collection of classic cars and motorcycles. Professionally sourced, fully sorted, and ready for their next owner.">
+  <link rel="icon" href="images/card-logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <img src="images/card-logo.png" alt="Wigley's Wheels logo">
+        <span class="logo">Wigley's <span>Wheels</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="inventory.html">Inventory</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Wigley's Wheels</h1>
+    <p class="tagline">A curated collection of classic cars &amp; motorcycles</p>
+    <p>Every vehicle in the collection is professionally sourced, properly sorted, and ready for the road.</p>
+    <a href="inventory.html" class="btn">View Inventory</a>
+    <a href="contact.html" class="btn btn-outline">Get In Touch</a>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>Featured Stock</h2>
+        <p>Click a vehicle to browse its photos. More stock is on the way.</p>
+      </div>
+      <div class="vehicle-grid" id="featured-grid"></div>
+    </div>
+  </section>
+
+  <section class="alt-bg">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Buy From Us</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#128269;</div>
+          <h3>Professionally Sourced</h3>
+          <p>Each vehicle is carefully selected, hand-picked, scrutinised and vetted before it earns a place in the collection.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#10003;</div>
+          <h3>Thoroughly Checked</h3>
+          <p>Every car and motorcycle is carefully assessed and prepared to our exacting standards before it's listed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128172;</div>
+          <h3>Friendly Advice</h3>
+          <p>Looking for something specific? Get in touch and we'll help you track it down.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Wigley's Wheels. All rights reserved.</p>
+    <p><a href="contact.html">Contact us</a> &middot; <a href="inventory.html">View inventory</a></p>
+  </footer>
+
+  <script src="data/vehicles.js"></script>
+  <script src="js/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
