@@ -1,0 +1,198 @@
+// Mobile nav toggle
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.querySelector(".nav-links");
+  if (toggle && links) {
+    toggle.addEventListener("click", () => links.classList.toggle("open"));
+  }
+});
+
+function formatPrice(price) {
+  return typeof price === "number" ? "£" + price.toLocaleString("en-GB") : price;
+}
+
+function vehicleCardHTML(v, index) {
+  const fit = v.fit || "contain";
+  let statusTag = "";
+  if (v.available) {
+    statusTag = `<span class="price-tag">${formatPrice(v.price)}</span>`;
+  } else if (v.type === "motorcycle") {
+    statusTag = `<span class="soon-tag">Coming Soon</span>`;
+  }
+  return `
+    <article class="vehicle-card" data-vehicle-index="${index}">
+      <div class="badge">
+        ${statusTag}
+        <img src="${v.images[0]}" alt="${v.name}" style="object-fit: ${fit};">
+      </div>
+      <div class="vehicle-body">
+        <h3>${v.name}</h3>
+      </div>
+    </article>
+  `;
+}
+
+function renderVehicles(container, list, indexLookup) {
+  container.innerHTML = list.length
+    ? list.map((v) => vehicleCardHTML(v, indexLookup(v))).join("")
+    : '<p class="no-results">No vehicles match this filter right now — check back soon.</p>';
+}
+
+// Featured vehicles on the home page
+function initFeatured() {
+  const el = document.getElementById("featured-grid");
+  if (!el || typeof VEHICLES === "undefined") return;
+  renderVehicles(el, VEHICLES.filter((v) => v.available), (v) => VEHICLES.indexOf(v));
+}
+
+// Full filterable inventory on the inventory page
+const INVENTORY_INTRO = {
+  all: "From classic cars to iconic motorcycles, every vehicle we handle is carefully sourced and properly sorted before it goes up for sale.",
+  car: "Our cars are sourced from trusted collections and dealers, fully inspected and recommissioned, and ready for their next owner.",
+  motorcycle: "Some of our motorcycles are ready to ride now, with more on the way. Get in touch to be first in line."
+};
+
+function initInventory() {
+  const grid = document.getElementById("inventory-grid");
+  if (!grid || typeof VEHICLES === "undefined") return;
+
+  const intro = document.getElementById("inventory-intro");
+  const buttons = document.querySelectorAll(".filter-btn");
+  let currentFilter = "all";
+
+  function apply() {
+    const list =
+      currentFilter === "all"
+        ? VEHICLES
+        : VEHICLES.filter((v) => v.type === currentFilter);
+    renderVehicles(grid, list, (v) => VEHICLES.indexOf(v));
+    if (intro) intro.textContent = INVENTORY_INTRO[currentFilter];
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      apply();
+    });
+  });
+
+  apply();
+}
+
+// Click-to-open photo gallery with prev/next and click-to-zoom
+function initGallery() {
+  if (typeof VEHICLES === "undefined") return;
+
+  const modal = document.createElement("div");
+  modal.className = "gallery-modal";
+  modal.innerHTML = `
+    <div class="gallery-backdrop"></div>
+    <div class="gallery-content">
+      <button class="gallery-close" aria-label="Close">&times;</button>
+      <div class="gallery-image-wrap">
+        <button class="gallery-nav gallery-prev" aria-label="Previous photo">&#10094;</button>
+        <img class="gallery-image" src="" alt="">
+        <button class="gallery-nav gallery-next" aria-label="Next photo">&#10095;</button>
+      </div>
+      <div class="gallery-info">
+        <div class="gallery-info-top">
+          <h3 class="gallery-title"></h3>
+          <span class="gallery-price"></span>
+        </div>
+        <p class="gallery-desc"></p>
+        <p class="gallery-counter"></p>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const imageWrap = modal.querySelector(".gallery-image-wrap");
+  const imageEl = modal.querySelector(".gallery-image");
+  const titleEl = modal.querySelector(".gallery-title");
+  const priceEl = modal.querySelector(".gallery-price");
+  const descEl = modal.querySelector(".gallery-desc");
+  const counterEl = modal.querySelector(".gallery-counter");
+  const prevBtn = modal.querySelector(".gallery-prev");
+  const nextBtn = modal.querySelector(".gallery-next");
+
+  let vehicle = null;
+  let photoIndex = 0;
+
+  function renderPhoto() {
+    imageWrap.classList.remove("zoomed");
+    imageEl.src = vehicle.images[photoIndex];
+    imageEl.alt = vehicle.name;
+    const multi = vehicle.images.length > 1;
+    prevBtn.style.display = multi ? "flex" : "none";
+    nextBtn.style.display = multi ? "flex" : "none";
+    counterEl.style.display = multi ? "block" : "none";
+    counterEl.textContent = `${photoIndex + 1} / ${vehicle.images.length}`;
+  }
+
+  function open(v) {
+    vehicle = v;
+    photoIndex = 0;
+    titleEl.textContent = v.name;
+    priceEl.textContent = v.available
+      ? formatPrice(v.price)
+      : v.type === "motorcycle"
+        ? "Coming Soon"
+        : "";
+    descEl.textContent = v.description || "";
+    descEl.style.display = v.description ? "" : "none";
+    renderPhoto();
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function step(delta) {
+    photoIndex = (photoIndex + delta + vehicle.images.length) % vehicle.images.length;
+    renderPhoto();
+  }
+
+  document.body.addEventListener("click", (e) => {
+    const card = e.target.closest(".vehicle-card");
+    if (!card) return;
+    const v = VEHICLES[Number(card.dataset.vehicleIndex)];
+    if (v) open(v);
+  });
+
+  modal.querySelector(".gallery-backdrop").addEventListener("click", close);
+  modal.querySelector(".gallery-close").addEventListener("click", close);
+  prevBtn.addEventListener("click", () => step(-1));
+  nextBtn.addEventListener("click", () => step(1));
+  imageEl.addEventListener("click", () => imageWrap.classList.toggle("zoomed"));
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  imageWrap.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+  imageWrap.addEventListener("touchend", (e) => {
+    if (imageWrap.classList.contains("zoomed") || vehicle.images.length < 2) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initFeatured();
+  initInventory();
+  initGallery();
+});
