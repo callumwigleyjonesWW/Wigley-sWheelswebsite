@@ -27,15 +27,24 @@ function vehicleCardHTML(v, index) {
       </div>
       <div class="vehicle-body">
         <h3>${v.name}</h3>
+        ${!v.available && v.price !== undefined ? `<p class="vehicle-price">${formatPrice(v.price)}</p>` : ""}
       </div>
     </article>
   `;
 }
 
 function renderVehicles(container, list, indexLookup) {
-  container.innerHTML = list.length
-    ? list.map((v) => vehicleCardHTML(v, indexLookup(v))).join("")
-    : '<p class="no-results">No vehicles match this filter right now — check back soon.</p>';
+  if (!list.length) {
+    container.innerHTML = '<p class="no-results">No vehicles match this filter right now — check back soon.</p>';
+    return;
+  }
+  const card = (v) => vehicleCardHTML(v, indexLookup(v));
+  const forSale = list.filter((v) => v.available);
+  const comingSoon = list.filter((v) => !v.available);
+  const divider = forSale.length && comingSoon.length
+    ? '<div class="vehicle-divider" role="separator"></div>'
+    : "";
+  container.innerHTML = forSale.map(card).join("") + divider + comingSoon.map(card).join("");
 }
 
 // Featured vehicles on the home page
@@ -104,6 +113,13 @@ function initGallery() {
         <p class="gallery-desc"></p>
         <p class="gallery-counter"></p>
       </div>
+      <div class="gallery-actions">
+        <a class="btn gallery-interest" href="interest.html">
+          <span class="btn-main">Register Your Interest</span>
+          <span class="btn-sub">Be the first to know when it's available</span>
+        </a>
+        <a class="btn gallery-inquire" href="contact.html">Inquire Now</a>
+      </div>
     </div>
   `;
   document.body.appendChild(modal);
@@ -116,6 +132,9 @@ function initGallery() {
   const counterEl = modal.querySelector(".gallery-counter");
   const prevBtn = modal.querySelector(".gallery-prev");
   const nextBtn = modal.querySelector(".gallery-next");
+  const actionsEl = modal.querySelector(".gallery-actions");
+  const inquireBtn = modal.querySelector(".gallery-inquire");
+  const interestBtn = modal.querySelector(".gallery-interest");
 
   let vehicle = null;
   let photoIndex = 0;
@@ -135,13 +154,21 @@ function initGallery() {
     vehicle = v;
     photoIndex = 0;
     titleEl.textContent = v.name;
+    const hasPrice = v.price !== undefined;
     priceEl.textContent = v.available
       ? formatPrice(v.price)
       : v.type === "motorcycle"
-        ? "Coming Soon"
+        ? (hasPrice ? formatPrice(v.price) + " · Coming Soon" : "Coming Soon")
         : "";
     descEl.textContent = v.description || "";
     descEl.style.display = v.description ? "" : "none";
+    const comingSoon = !v.available && v.type === "motorcycle";
+    actionsEl.style.display = hasPrice || comingSoon ? "" : "none";
+    interestBtn.style.display = comingSoon ? "" : "none";
+    interestBtn.href = "interest.html?vehicle=" + encodeURIComponent(v.name);
+    inquireBtn.style.display = hasPrice ? "" : "none";
+    inquireBtn.classList.toggle("btn-outline", comingSoon);
+    inquireBtn.href = "contact.html?vehicle=" + encodeURIComponent(v.name);
     renderPhoto();
     modal.classList.add("open");
     document.body.style.overflow = "hidden";

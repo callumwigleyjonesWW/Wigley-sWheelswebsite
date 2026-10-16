@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#efe4cc">
+  <title>Register Your Interest | Wigley's Wheels</title>
+  <meta name="description" content="Register your interest in a coming-soon classic from Wigley's Wheels and be the first to know when it's available.">
+  <link rel="icon" href="images/card-logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <img src="images/card-logo.png" alt="Wigley's Wheels logo">
+        <span class="logo">Wigley's <span>Wheels</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="inventory.html" class="active">Inventory</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <div class="container interest-wrap">
+      <div class="section-header">
+        <h2>Register Your Interest</h2>
+        <p class="tagline" id="interest-vehicle"></p>
+        <p id="interest-intro">Leave your details and we'll let you know as soon as it's available.</p>
+      </div>
+
+      <form id="interest-form" class="interest-form">
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="off" required>
+        </div>
+        <div>
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" autocomplete="off" inputmode="tel" pattern="[0-9+\s\-\(\)]{7,20}" title="Please enter a valid phone number" required>
+        </div>
+        <input type="text" name="_honey" id="honey" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true">
+        <button type="submit" class="btn" id="interest-submit">Register Interest</button>
+        <p class="form-note">We'll only use your details to contact you about this vehicle.</p>
+        <p class="form-note" id="interest-error" role="alert" hidden></p>
+      </form>
+
+      <div class="interest-thanks" id="interest-thanks" hidden>
+        <div class="feature-icon">&#10003;</div>
+        <h3>Thank you</h3>
+        <p id="interest-thanks-text"></p>
+        <a href="inventory.html" class="btn btn-outline">Back to Inventory</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Wigley's Wheels. All rights reserved.</p>
+    <p><a href="contact.html">Contact us</a> &middot; <a href="inventory.html">Back to inventory</a></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const NOTIFY_EMAIL = "callum.wigleyswheels@gmail.com";
+
+    const params = new URLSearchParams(window.location.search);
+    const vehicle = (params.get("vehicle") || "").slice(0, 120);
+    const vehicleLabel = vehicle || "a coming-soon vehicle";
+
+    if (vehicle) {
+      document.getElementById("interest-vehicle").textContent = vehicle;
+    } else {
+      document.getElementById("interest-vehicle").hidden = true;
+    }
+
+    const form = document.getElementById("interest-form");
+    const submitBtn = document.getElementById("interest-submit");
+    const errorEl = document.getElementById("interest-error");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      errorEl.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      const payload = {
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        vehicle: vehicleLabel,
+        _subject: "New interest: " + vehicleLabel,
+        _template: "table",
+        _captcha: "false",
+        _honey: document.getElementById("honey").value
+      };
+
+      try {
+        const response = await fetch("https://formsubmit.co/ajax/" + NOTIFY_EMAIL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok || String(result.success) !== "true") throw new Error("not sent");
+
+        form.hidden = true;
+        document.getElementById("interest-intro").hidden = true;
+        document.getElementById("interest-thanks-text").textContent =
+          "You're on the list for " + (vehicle ? "the " + vehicle : "our coming-soon vehicles") +
+          ". We'll be in touch as soon as it's available.";
+        document.getElementById("interest-thanks").hidden = false;
+      } catch (err) {
+        errorEl.textContent = "Sorry, that didn't send. Please try again, or message us on WhatsApp on +44 7496 726134.";
+        errorEl.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Register Interest";
+      }
+    });
+  </script>
+</body>
+</html>

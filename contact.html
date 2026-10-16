@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#efe4cc">
   <title>Contact | Wigley's Wheels</title>
   <meta name="description" content="Get in touch with Wigley's Wheels about a classic car or motorcycle in the collection, buying, or selling.">
   <link rel="icon" href="images/card-logo.png">
@@ -36,34 +37,27 @@
       <div class="contact-layout">
         <div>
           <ul class="info-list">
-            <li><strong>Proprietor</strong>Callum Wigley-Jones</li>
+            <li><strong>Owner</strong>Callum Wigley-Jones</li>
             <li><strong>Phone / WhatsApp</strong>+44 7496 726134</li>
             <li><strong>Email</strong>callum.wigleyswheels@gmail.com</li>
           </ul>
         </div>
 
         <div>
-          <!-- Netlify Forms: works automatically once deployed on Netlify, no backend needed -->
-          <form name="contact" method="POST" data-netlify="true">
-            <input type="hidden" name="form-name" value="contact">
+          <form id="contact-form" autocomplete="off" novalidate>
             <div>
               <label for="name">Name</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            <div>
-              <label for="phone">Phone (optional)</label>
-              <input type="tel" id="phone" name="phone">
+              <input type="text" id="name" name="visitor-name" autocomplete="off" value="" required>
             </div>
             <div>
               <label for="message">Message</label>
               <textarea id="message" name="message" required></textarea>
             </div>
-            <button type="submit" class="btn">Send Message</button>
-            <p class="form-note">Submissions are handled by Netlify Forms — no data is stored on this site itself.</p>
+            <div class="form-actions">
+              <button type="button" class="btn" id="send-whatsapp">Send via WhatsApp</button>
+              <button type="button" class="btn btn-outline" id="send-email">Send via Email</button>
+            </div>
+            <p class="form-note" id="form-error" role="alert" hidden></p>
           </form>
         </div>
       </div>
@@ -75,6 +69,53 @@
     <p><a href="index.html">Back to home</a></p>
   </footer>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const WHATSAPP_NUMBER = "447496726134";
+    const EMAIL_ADDRESS = "callum.wigleyswheels@gmail.com";
+
+    const form = document.getElementById("contact-form");
+    const nameInput = document.getElementById("name");
+    const messageInput = document.getElementById("message");
+    const errorEl = document.getElementById("form-error");
+
+    const vehicleName = new URLSearchParams(window.location.search).get("vehicle");
+    if (vehicleName) {
+      messageInput.value = "- " + vehicleName.slice(0, 120) + " -\n\n";
+    }
+
+    function buildMessage() {
+      const name = nameInput.value.trim();
+      const message = messageInput.value.trim();
+      if (!name || !message) {
+        errorEl.textContent = "Please add your name and a message first.";
+        errorEl.hidden = false;
+        (name ? messageInput : nameInput).focus();
+        return null;
+      }
+      errorEl.hidden = true;
+      return { name: name, message: message, text: "Hi Callum, it's " + name + ".\n\n" + message };
+    }
+
+    document.getElementById("send-whatsapp").addEventListener("click", function () {
+      const m = buildMessage();
+      if (!m) return;
+      const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(m.text);
+      window.open(url, "_blank", "noopener");
+    });
+
+    document.getElementById("send-email").addEventListener("click", function () {
+      const m = buildMessage();
+      if (!m) return;
+      const subject = vehicleName ? "Inquiry: " + vehicleName.slice(0, 120) : "Website inquiry";
+      window.location.href = "mailto:" + EMAIL_ADDRESS +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(m.text);
+    });
+
+    form.addEventListener("submit", function (e) { e.preventDefault(); });
+  </script>
 </body>
 </html>
