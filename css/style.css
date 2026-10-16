@@ -711,3 +711,11 @@ textarea { min-height: 130px; resize: vertical; }
     width: calc(50% - 16px);
   }
 }
+
+/* About page: logo shown whole, centred in its box */
+.about-logo img {
+  box-sizing: border-box;
+  padding: 22px;
+  object-fit: contain;
+  object-position: center;
+}
