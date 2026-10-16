@@ -50,7 +50,7 @@ const VEHICLES = [
     name: "1977 Yamaha XT500",
     available: true,
     price: 10000,
-    description: "Inquire for more information",
+    description: "Papers in order",
     images: [
       "images/bikes/yamaha-xt500/yamaha-xt500-01.webp",
       "images/bikes/yamaha-xt500/yamaha-xt500-02.webp",
