@@ -211,6 +211,7 @@ section { padding: 72px 24px; }
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
   gap: var(--card-gap);
 }
 
