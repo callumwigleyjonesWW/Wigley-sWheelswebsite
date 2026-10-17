@@ -41,10 +41,13 @@ function renderVehicles(container, list, indexLookup) {
   const card = (v) => vehicleCardHTML(v, indexLookup(v));
   const forSale = list.filter((v) => v.available);
   const comingSoon = list.filter((v) => !v.available);
-  const divider = forSale.length && comingSoon.length
-    ? '<div class="vehicle-divider" role="separator"></div>'
-    : "";
-  container.innerHTML = forSale.map(card).join("") + divider + comingSoon.map(card).join("");
+  const both = forSale.length && comingSoon.length;
+  const group = (classes, items) =>
+    items.length ? `<div class="vehicle-group ${classes}">${items.map(card).join("")}</div>` : "";
+  container.innerHTML =
+    group("vehicle-group--sale", forSale) +
+    (both ? '<div class="vehicle-divider" role="separator"></div>' : "") +
+    group("vehicle-group--soon", comingSoon);
 }
 
 // Featured vehicles on the home page

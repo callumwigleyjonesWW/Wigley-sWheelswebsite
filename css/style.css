@@ -46,9 +46,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
-  max-width: 1120px;
-  margin: 0 auto;
+  padding: 12px 32px;
 }
 
 .brand {
@@ -118,7 +116,7 @@ a { color: inherit; text-decoration: none; }
 .hero {
   background: linear-gradient(135deg, var(--paper) 0%, var(--paper-dark) 100%);
   color: var(--maroon);
-  padding: 88px 24px 96px;
+  padding: 56px 24px 60px;
   text-align: center;
   position: relative;
 }
@@ -133,8 +131,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin: 0 0 16px;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  line-height: 1.2;
+  margin: 0 0 18px;
   font-weight: 700;
 }
 
@@ -204,10 +203,32 @@ section { padding: 72px 24px; }
 .alt-bg { background: var(--paper); }
 
 /* Vehicle grid & cards */
-.vehicle-grid {
+/* Vehicle groups: for-sale cards sit centred; coming-soon cards fill a grid */
+.vehicle-grid { --card-gap: 28px; --card-w: 100%; }
+
+.vehicle-group--sale {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--card-gap);
+}
+
+.vehicle-group--sale .vehicle-card { flex: 0 0 var(--card-w); max-width: var(--card-w); }
+
+.vehicle-group--soon {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-  gap: 28px;
+  grid-template-columns: 1fr;
+  gap: var(--card-gap);
+}
+
+@media (min-width: 640px) {
+  .vehicle-grid { --card-w: calc((100% - var(--card-gap)) / 2); }
+  .vehicle-group--soon { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 960px) {
+  .vehicle-grid { --card-w: calc((100% - 2 * var(--card-gap)) / 3); }
+  .vehicle-group--soon { grid-template-columns: repeat(3, 1fr); }
 }
 
 .vehicle-card {
@@ -544,7 +565,7 @@ textarea { min-height: 130px; resize: vertical; }
   .vehicle-card .soon-tag,
   .vehicle-card .price-tag { font-size: 0.78rem; }
 
-  .hero { padding: 64px 20px 72px; }
+  .hero { padding: 44px 20px 52px; }
   .hero::after { inset: 10px; }
 
   .hero .btn {
@@ -682,7 +703,7 @@ textarea { min-height: 130px; resize: vertical; }
   grid-column: 1 / -1;
   position: relative;
   height: 3px;
-  margin: 28px 0;
+  margin: 36px 0;
   background: linear-gradient(90deg, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
 }
 
@@ -718,4 +739,20 @@ textarea { min-height: 130px; resize: vertical; }
   padding: 22px;
   object-fit: contain;
   object-position: center;
+}
+
+
+/* Home page: Featured Stock heading and line, larger and sitting closer to the hero */
+.featured { padding-top: 44px; }
+
+.featured .section-header { margin-bottom: 36px; }
+
+.featured-header h2 { font-size: 2.6rem; margin-bottom: 14px; }
+
+.featured-header p { font-size: 1.25rem; }
+
+@media (max-width: 600px) {
+  .featured { padding-top: 36px; }
+  .featured-header h2 { font-size: 2.1rem; }
+  .featured-header p { font-size: 1.1rem; }
 }
