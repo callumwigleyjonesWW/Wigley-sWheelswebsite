@@ -33,7 +33,7 @@ const VEHICLES = [
     type: "motorcycle",
     name: "1989 Suzuki GSXR1100 Slingshot",
     available: true,
-    price: 12000,
+    price: "POA",
     description: "In excellent condition, having covered 30,000 miles.",
     images: [
       "images/bikes/suzuki-gsxr1100-slingshot/suzuki-gsxr1100-01.webp",
@@ -49,7 +49,7 @@ const VEHICLES = [
     type: "motorcycle",
     name: "1977 Yamaha XT500",
     available: true,
-    price: 10000,
+    price: "POA",
     description: "Papers in order",
     images: [
       "images/bikes/yamaha-xt500/yamaha-xt500-01.webp",
