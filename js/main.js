@@ -64,6 +64,23 @@ const INVENTORY_INTRO = {
   motorcycle: "Some of our motorcycles are ready to ride now, with more on the way. Get in touch to be first in line."
 };
 
+// Push the divider and Coming Soon cards down so that, when the page opens, only the
+// line and the very top of the Coming Soon cards peek up above the bottom of the window.
+// It only adds empty space under the for-sale cards; they never move.
+const COMING_SOON_PEEK = 44;
+
+function spaceComingSoon(container) {
+  const sale = container.querySelector(".vehicle-group--sale");
+  const divider = container.querySelector(".vehicle-divider");
+  if (!sale || !divider) return;
+  sale.style.minHeight = "";
+  const style = getComputedStyle(divider);
+  const dividerSpace = divider.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+  const saleTop = sale.getBoundingClientRect().top + window.scrollY;
+  const needed = window.innerHeight - COMING_SOON_PEEK - dividerSpace - saleTop;
+  if (needed > sale.offsetHeight) sale.style.minHeight = needed + "px";
+}
+
 function initInventory() {
   const grid = document.getElementById("inventory-grid");
   if (!grid || typeof VEHICLES === "undefined") return;
@@ -79,7 +96,16 @@ function initInventory() {
         : VEHICLES.filter((v) => v.type === currentFilter);
     renderVehicles(grid, list, (v) => VEHICLES.indexOf(v));
     if (intro) intro.textContent = INVENTORY_INTRO[currentFilter];
+    spaceComingSoon(grid);
   }
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => spaceComingSoon(grid), 120);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => spaceComingSoon(grid));
+  window.addEventListener("load", () => spaceComingSoon(grid));
 
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
