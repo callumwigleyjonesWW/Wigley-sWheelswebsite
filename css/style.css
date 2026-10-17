@@ -132,6 +132,7 @@ a { color: inherit; text-decoration: none; }
 
 .hero h1 {
   font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  text-wrap: balance;
   line-height: 1.2;
   margin: 0 0 18px;
   font-weight: 700;
@@ -755,4 +756,15 @@ textarea { min-height: 130px; resize: vertical; }
   .featured { padding-top: 36px; }
   .featured-header h2 { font-size: 2.1rem; }
   .featured-header p { font-size: 1.1rem; }
+}
+
+/* Big screens only: the home page box is narrower, centred, with a gap at each side */
+@media (min-width: 1200px) {
+  .hero {
+    max-width: 1120px;
+    margin: 28px auto 0;
+    border-radius: 6px;
+  }
+
+  .hero h1 { font-size: 2.25rem; }
 }
