@@ -170,6 +170,7 @@ function initGallery() {
   const priceEl = modal.querySelector(".gallery-price");
   const descEl = modal.querySelector(".gallery-desc");
   const specsEl = modal.querySelector(".gallery-specs");
+  const infoEl = modal.querySelector(".gallery-info");
   const counterEl = modal.querySelector(".gallery-counter");
   const prevBtn = modal.querySelector(".gallery-prev");
   const nextBtn = modal.querySelector(".gallery-next");
@@ -309,6 +310,8 @@ function initGallery() {
     renderPhoto();
     startSlideshow();
     modal.classList.add("open");
+    // Every vehicle starts at the top of its text (mileage pills, then description)
+    infoEl.scrollTop = 0;
     document.body.style.overflow = "hidden";
   }
 
