@@ -325,7 +325,9 @@ section { padding: 72px 24px; }
 
 .gallery-content {
   position: relative;
-  width: min(92vw, 900px);
+  /* On big screens the width follows the height, so the photo stays about half
+     of the popup and the text gets the other half */
+  width: min(92vw, 900px, max(67.5vh, 480px));
   max-height: 90vh;
   background: var(--cream);
   border: 2px solid var(--gold);
@@ -424,9 +426,15 @@ section { padding: 72px 24px; }
   border-top: 1px solid rgba(92, 42, 36, 0.15);
   padding: 14px 24px 18px;
   overflow-y: auto;
-  max-height: 32vh;
   flex: 1 1 auto;
   min-height: 0;
+}
+
+/* Bike photos use a taller 4:3 frame, so their popup is a little narrower */
+@media (min-width: 601px) {
+  .gallery-modal.is-bike .gallery-content {
+    width: min(92vw, 900px, max(60vh, 480px));
+  }
 }
 
 .gallery-image-wrap { flex-shrink: 0; }
