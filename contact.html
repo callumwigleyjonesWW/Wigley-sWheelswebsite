@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=20261017f">
+  <link rel="stylesheet" href="css/style.css?v=20261022o">
 </head>
 <body>
 
@@ -71,7 +71,7 @@
     <p><a href="./">Back to home</a></p>
   </footer>
 
-  <script src="js/main.js?v=20261017f"></script>
+  <script src="js/main.js?v=20261022o"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -101,20 +101,27 @@
       return { name: name, message: message, text: "Hi Callum, it's " + name + ".\n\n" + message };
     }
 
+    function afterSend() {
+      form.reset();
+      messageInput.value = "";
+    }
+
     document.getElementById("send-whatsapp").addEventListener("click", function () {
       const m = buildMessage();
       if (!m) return;
       const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(m.text);
       window.open(url, "_blank", "noopener");
+      afterSend();
     });
 
     document.getElementById("send-email").addEventListener("click", function () {
       const m = buildMessage();
       if (!m) return;
-      const subject = vehicleName ? "Inquiry: " + vehicleName.slice(0, 120) : "Website inquiry";
+      const subject = vehicleName ? "Enquiry: " + vehicleName.slice(0, 120) : "Website enquiry";
       window.location.href = "mailto:" + EMAIL_ADDRESS +
         "?subject=" + encodeURIComponent(subject) +
         "&body=" + encodeURIComponent(m.text);
+      afterSend();
     });
 
     form.addEventListener("submit", function (e) { e.preventDefault(); });

@@ -3,7 +3,8 @@
 //   in the click-to-open gallery (with prev/next and zoom).
 // available: true once it's actually in stock (shows the price); leave false/omitted
 //   for "Coming Soon" stock (no price shown).
-// price: a number (formatted as £) or a string like "POA".
+// price: a number (formatted as £) or a string like "Price on Request".
+// specs: optional pills shown above the description, { mileage, gearbox, fuel }.
 // description: shown in the gallery view once written; leave "" until ready.
 const VEHICLES = [
   {
@@ -11,7 +12,8 @@ const VEHICLES = [
     type: "car",
     name: "1969 Ferrari 365 GT 2+2",
     available: true,
-    price: "POA",
+    price: "Price on Request",
+    specs: { mileage: "70,128 miles", gearbox: "Manual", fuel: "Petrol" },
     description: "Launched at the 1966 Geneva Motor Show, the 365 GT 2+2 was Ferrari's top-selling model of its era, with 801 built over four years — only 52 in right-hand-drive. As a luxury Grand Tourer it offered leather upholstery, electric windows, optional air conditioning, and was the first Ferrari fitted with power steering, alongside self-levelling independent rear suspension.\n\nThis particular right-hand-drive example left Maranello in 1969 and was delivered new to South Africa via the United Kingdom, first registered in 1970. Well-known enthusiast Stuart Bromfield and his friend Bill Brennan acquired the car in 1976, though it saw little use. Belgian national Robert Kriek purchased it in 1986 and, in the late 1990s, commissioned a full body-off restoration through Ferrari importer TAK Motors, with the car returned to him in 1999. It was then held as a long-term investment asset in storage.\n\nFollowing an 18-month commission by Carlo Viglietti at Pablo Clark Racing, this 365 GT 2+2 now presents close to 100-point perfection.",
     fit: "contain",
     images: [
@@ -29,11 +31,93 @@ const VEHICLES = [
     ]
   },
   {
+    id: "c2",
+    type: "car",
+    name: "BMW 635 CSi - Race Spec",
+    available: true,
+    price: "Price on Request",
+    images: [
+      "images/cars/bmw-635-csi/bmw-635-csi-01.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-03.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-07.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-05.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-06.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-08.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-09.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-10.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-11.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-12.jpg",
+      "images/cars/bmw-635-csi/bmw-635-csi-13.jpg"
+    ]
+  },
+  {
+    id: "c3",
+    type: "car",
+    name: "1969 Jaguar E-Type Series 2 Coupe",
+    available: true,
+    price: "Price on Request",
+    specs: { mileage: "59,296 miles", gearbox: "Manual", fuel: "Petrol" },
+    description: "This 1969 Jaguar E-Type Series 2 FHC presents an accessible opportunity to own one of the most beautiful cars ever produced.\n\nFinished in its original, yet imperfect, factory Burgundy paintwork, this E-Type has retained much of its authenticity and classic charm.\n\nThe car was resprayed in 2015 and fitted with new chrome spoke wheels and tyres. Its original interior is in relatively good condition, but the car has stood idle for some time. As a result, the paintwork requires some attention and the car will benefit from a thorough service which may include an alternator replacement and brake service.\n\nThe iconic 4.2-litre straight-six engine runs beautifully and with the necessary attention, this E-Type still has many more miles of joy to give its future owner.\n\nThis E-Type is looking for love and care and is priced accordingly.",
+    images: [
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-01.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-02.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-03.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-04.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-05.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-06.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-07.jpg",
+      "images/cars/jaguar-e-type-series-2/jaguar-e-type-series-2-08.jpg"
+    ]
+  },
+  {
+    id: "c4",
+    type: "car",
+    name: "1966 Sunbeam Tiger Convertible",
+    available: true,
+    price: "Price on Request",
+    specs: { mileage: "6,214 miles", gearbox: "Manual", fuel: "Petrol" },
+    description: "This 1965 Sunbeam Alpine 260 is one of just 72 Tigers assembled at National Motor Assemblies in Alberton. These were the only Tigers assembled outside the UK and they are sought-after by collectors. They were imported as Semi-Knocked-Down (SKD) units in 6 batches of 12 cars each and were given the unique 948 chassis identification sequence.\n\nThe Tiger is authentic in every detail, including verification of the Body and Chassis modifications by Jensen Motors to accommodate the Ford V8 Engine and Drivetrain. The car has its original seats and instruments. The braking, cooling and fueling systems have all been restored, a high capacity alternator has been fitted and the car wears a new set of tyres. The paintwork is good, but showing its age.\n\nThe Tiger conversion to accommodate the Ford 260 V8 was designed by Carroll Shelby, which adds to the heritage of this unique and special collector car. This is a \"pocket rocket\" that starts and drives well and is priced for further improvement.\n\nCaution: The Sunbeam Tiger is a classic car and does not have the passenger and system safety characteristics of modern vehicles. It is reliable, can be driven regularly and will always attract attention at Shows and Car Meets.",
+    images: [
+      "images/cars/sunbeam-tiger/sunbeam-tiger-01.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-02.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-03.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-04.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-05.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-06.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-07.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-08.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-09.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-10.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-11.jpg",
+      "images/cars/sunbeam-tiger/sunbeam-tiger-12.jpg"
+    ]
+  },
+  {
+    id: "c5",
+    type: "car",
+    name: "1959 Riley One-Point-Five - Series 1",
+    available: true,
+    price: "Price on Request",
+    specs: { mileage: "31,069 miles", gearbox: "Manual", fuel: "Petrol" },
+    description: "This 1959 Riley One-Point-Five is ideal as a classic \"Town Car\" and will always draw attention. The Riley starts and runs very well. Over the past 10 years, the braking, cooling and fueling systems have all been restored, as have the starter motor, dynamo and regulator. Some minimal rust on the body was sorted and the vehicle repainted. The car wears a new set of tyres.\n\nCaution: The Riley is a classic car and does not have the passenger and system safety characteristics of modern vehicles. But it's solid and can be driven regularly. It is more than just a weekend driver.",
+    images: [
+      "images/cars/riley-1-5/riley-1-5-01.jpg",
+      "images/cars/riley-1-5/riley-1-5-02.jpg",
+      "images/cars/riley-1-5/riley-1-5-03.jpg",
+      "images/cars/riley-1-5/riley-1-5-04.jpg",
+      "images/cars/riley-1-5/riley-1-5-05.jpg",
+      "images/cars/riley-1-5/riley-1-5-06.jpg",
+      "images/cars/riley-1-5/riley-1-5-07.jpg",
+      "images/cars/riley-1-5/riley-1-5-08.jpg",
+      "images/cars/riley-1-5/riley-1-5-09.jpg"
+    ]
+  },
+  {
     id: "m7",
     type: "motorcycle",
     name: "1989 Suzuki GSXR1100 Slingshot",
     available: true,
-    price: "POA",
+    price: "Price on Request",
     description: "In excellent condition, having covered 30,000 miles.",
     images: [
       "images/bikes/suzuki-gsxr1100-slingshot/suzuki-gsxr1100-01.webp",
@@ -49,7 +133,7 @@ const VEHICLES = [
     type: "motorcycle",
     name: "1977 Yamaha XT500",
     available: true,
-    price: "POA",
+    price: "Price on Request",
     description: "Papers in order",
     images: [
       "images/bikes/yamaha-xt500/yamaha-xt500-01.webp",
