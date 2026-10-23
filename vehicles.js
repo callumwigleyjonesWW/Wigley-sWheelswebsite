@@ -93,6 +93,32 @@ const VEHICLES = [
     ]
   },
   {
+    id: "c6",
+    type: "car",
+    name: "1960 Austin Healey 3000 BT7 Mark 1",
+    available: true,
+    price: "Price on Request",
+    specs: { mileage: "46,603 miles", gearbox: "Manual", fuel: "Petrol" },
+    description: "The Austin Healey range of stylish sports cars were produced in five series' between 1953 and 1967. The earliest 2-seater roadsters were powered by a 2.6-litre 4-cylinder engine that was progressively upgraded to 3.0 litres in straight six format, finally in 2+2 convertible style with improved suspension.\n\nThe vehicle has its original Hood and Tonneau with Seats in Navy Blue. As a CKD it has no factory colour, but navy blue was only installed in cars painted in Healey Blue. It was stripped to bare metal in 2013 and resprayed in Healey Blue over Old English White. All its original components were preserved and the engine was rebuilt. It must be noted that Blackheath did not always follow the Build Sheet detail and this vehicle did not receive its factory allocated engine when assembled.\n\nOver the past 10 years, the braking, cooling and fueling systems were restored, as were the starter motor, dynamo and regulator. An original factory Hardtop has been fitted as well as replica Mini Lite Wheels with new tyres. The Healey participated in the 2022 National Tour in the Southern Cape. It was on loan to a senior club member whose own BT7 Healey had broken down. He credited the car as one of the best Healey's he had ever driven.\n\nCaution: This Austin Healey BT7 is a 65 year old classic car that does not have the passenger and system safety characteristics of modern vehicles. It is solid and loves to be driven regularly, especially on out-runs, to car shows and Cars@Coffee meets.",
+    images: [
+      "images/cars/austin-healey-3000/austin-healey-3000-01.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-02.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-03.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-04.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-05.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-06.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-07.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-08.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-09.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-10.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-11.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-12.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-13.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-14.jpg",
+      "images/cars/austin-healey-3000/austin-healey-3000-15.jpg"
+    ]
+  },
+  {
     id: "c5",
     type: "car",
     name: "1959 Riley One-Point-Five - Series 1",
