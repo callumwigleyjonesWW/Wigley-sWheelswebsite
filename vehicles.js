@@ -51,6 +51,26 @@ const VEHICLES = [
     ]
   },
   {
+    id: "c7",
+    type: "car",
+    name: "1969 Jaguar E-Type Series 2 Roadster",
+    available: true,
+    price: "Price on Request",
+    specs: { mileage: "85,376 miles", gearbox: "Manual", fuel: "Petrol" },
+    description: "This finely restored E-Type Series 2 OTS was exported to the United States as new and spent much of its life on the West Coast and even though it was well cared for, time and the environment took their toll.\n\nThe car was imported into South Africa in 2009 by a well-known collector in Port Elizabeth (now Gqeberha). In the process of its recommission, it was converted to Right Hand Drive (RHD), but retained its USA specification.\n\nSince 2014, the vehicle benefitted from a full “body off” restoration over a 5-year period between 2017 and 2023. This process has ensured an “all-systems” rebuild including retention of all original components. For safety reasons, some critical elements such as the wiring harness are new.",
+    images: [
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-01.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-02.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-03.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-04.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-05.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-06.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-07.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-08.jpg",
+      "images/cars/jaguar-e-type-roadster/jaguar-e-type-roadster-09.jpg"
+    ]
+  },
+  {
     id: "c3",
     type: "car",
     name: "1969 Jaguar E-Type Series 2 Coupe",
